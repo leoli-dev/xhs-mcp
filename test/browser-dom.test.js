@@ -5,7 +5,7 @@ import {chromium} from 'playwright-core';
 import {pageCards,pageNote} from '../src/extract.js';
 import {pageSession} from '../src/sites.js';
 
-const executablePath=process.env.CHROMIUM_PATH || '/Applications/Chromium.app/Contents/MacOS/Chromium';
+const executablePath=process.env.CHROMIUM_PATH || '/Applications/Thorium.app/Contents/MacOS/Thorium';
 const available=await access(executablePath).then(()=>true).catch(()=>false);
 test('Chromium DOM: 海外 Me、隐藏登录框、折叠发布页与 profile 笔记路径',{skip:!available},async()=>{
  const user='000000000000000000000000',note='111111111111111111111111';

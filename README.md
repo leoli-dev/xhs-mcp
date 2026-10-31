@@ -4,7 +4,7 @@
 
 ## 运行
 
-要求 Node.js 22+ 及支持 CDP 的 Chromium 系浏览器。先启动一个启用远程调试的浏览器，在该浏览器登录 https://www.rednote.com/（海外版）或 https://www.xiaohongshu.com/（国内版）。可用 `XHS_MCP_CDP_URL` 指定本机 CDP 地址（默认尝试 IPv4 和 IPv6 的 9223）。
+要求 Node.js 22+ 及支持 CDP 的 Chromium 系浏览器。推荐使用支持 H.264 / AAC 的 Thorium，以便播放视频。先启动一个启用远程调试的浏览器，在该浏览器登录 https://www.rednote.com/（海外版）或 https://www.xiaohongshu.com/（国内版）。可用 `XHS_MCP_CDP_URL` 指定本机 CDP 地址（默认尝试 IPv4 和 IPv6 的 9223）。服务只连接现有浏览器，不会自动启动浏览器。
 
 获取本仓库并在仓库根目录执行：
 
@@ -18,10 +18,10 @@ npm start
 
 ### 安全的浏览器设置
 
-CDP 可以完全控制浏览器、读取登录会话；只绑定回环地址，不要暴露到局域网或互联网，也不要通过不可信的代理转发。**只连接自己信任的本机 CDP 端点及 MCP 客户端**；本机其他进程也可能访问该端口。建议使用专用的浏览器数据目录，避免调试日常浏览器或使用日常个人资料。示例中将浏览器可执行文件替换为本机路径（macOS 可用 `/Applications/Chromium.app/Contents/MacOS/Chromium`）：
+CDP 可以完全控制浏览器、读取登录会话；只绑定回环地址，不要暴露到局域网或互联网，也不要通过不可信的代理转发。**只连接自己信任的本机 CDP 端点及 MCP 客户端**；本机其他进程也可能访问该端口。建议使用专用的浏览器数据目录，避免调试日常浏览器或使用日常个人资料。以下是 macOS 上的 Thorium 示例：
 
 ```sh
-"/path/to/chromium" --remote-debugging-address=127.0.0.1 --remote-debugging-port=9223 --user-data-dir="$HOME/.xhs-mcp-browser"
+"/Applications/Thorium.app/Contents/MacOS/Thorium" --remote-debugging-address=127.0.0.1 --remote-debugging-port=9223 --user-data-dir="$HOME/.xhs-mcp-browser"
 ```
 
 这个目录包含登录数据，请勿提交或分享；保留它可维持登录状态。若已有可信的专用 CDP 浏览器及 profile，可继续使用，不需要重建、删除或重置。不同浏览器版本的调试参数或 profile 限制可能不同；确认端口没有被其他程序占用。`doctor` 只检查已有站点标签页，返回 `unknown` 不一定表示未登录。读取结果、收藏、账号标识和签名链接也可能敏感；请勿提交或公开真实数据。
@@ -109,7 +109,7 @@ npm test
 
 `PAGE_UNAVAILABLE`：链接加载失败或失效；`NOTE_UNAVAILABLE`：未取得指定笔记全文；`AUTH_REQUIRED`：请在 Chromium 登录；`RATE_LIMITED`：请在 Chromium 完成站点验证后重试；`SEARCH_EXPIRED`：重新搜索。站点 DOM 变化可能需要更新 `src/browser.js` 中的搜索选择器及 `src/extract.js` 中的提取适配。
 
-自动化测试覆盖站点选择、URL 边界、MCP 内存传输及浏览器 DOM 提取。DOM 回归测试使用本机 Chromium，可通过 `CHROMIUM_PATH` 指定路径；找不到浏览器时该项会跳过。
+自动化测试覆盖站点选择、URL 边界、MCP 内存传输及浏览器 DOM 提取。DOM 回归测试默认使用 macOS 上的 Thorium，可通过 `CHROMIUM_PATH` 指定其他 Chromium 系浏览器路径；找不到浏览器时该项会跳过。
 
 `npm run test:live:rednote` 是可选的真实网络测试：它使用已登录会话读取收藏、笔记、图片及搜索，会在终端输出笔记 ID 和标题。`scripts/live-smoke.mjs` 也会输出真实标题。运行前请确认愿意访问这些数据，并保护终端输出和日志；离线测试不需要登录浏览器。
 

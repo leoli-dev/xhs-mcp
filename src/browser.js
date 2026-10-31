@@ -10,7 +10,7 @@ export class XhsBrowser {
       const u=new URL(endpoint);if(!['127.0.0.1','localhost','[::1]'].includes(u.hostname))throw new Error('INVALID_ARGUMENT: CDP 必须使用本机地址');
       try{browser=await chromium.connectOverCDP(endpoint,{timeout:5000,noDefaults:true});break;}catch{}
     }
-    if(!browser)throw new Error('BROWSER_UNAVAILABLE: 请打开 Chromium Debug（9223）');
+    if(!browser)throw new Error('BROWSER_UNAVAILABLE: 请打开 Chromium Debug（Thorium，端口 9223），或启动其他已配置的 CDP 浏览器');
     try{return await fn(browser.contexts()[0]);}finally{await browser.close();}
   }
   async guard(p){
