@@ -1,6 +1,6 @@
 # xhs-mcp
 
-复用本机 Chromium 的 RedNote 海外版或小红书国内版登录会话的只读 MCP，通过 CDP 连接浏览器并以 stdio 提供服务。支持搜索、读取笔记和图片、查看首页及当前账号的收藏；不提供发布、点赞或评论功能。默认连接本机 `9223`；读取操作创建自己的临时标签页并关闭，`xhs_open_home` 则保留新标签页供用户浏览。不关闭已有标签页或 Chromium，不导出 Cookie。项目非平台官方产品，网页变化和账号风控可能影响使用，请遵守平台条款及适用法律。
+复用本机 Thorium 浏览器的 RedNote 海外版或小红书国内版登录会话的只读 MCP，通过 CDP 连接浏览器并以 stdio 提供服务。支持搜索、读取笔记和图片、查看首页及当前账号的收藏；不提供发布、点赞或评论功能。默认连接本机 `9223`；读取操作创建自己的临时标签页并关闭，`xhs_open_home` 则保留新标签页供用户浏览。不关闭已有标签页或浏览器，不导出 Cookie。项目非平台官方产品，网页变化和账号风控可能影响使用，请遵守平台条款及适用法律。
 
 ## 运行
 
@@ -65,7 +65,7 @@ XHS_MCP_SITE = "rednote"
 | 工具 | 用途 |
 |---|---|
 | `xhs_session_status` | 检查浏览器和两个站点的登录状态，明确当前选择的站点 |
-| `xhs_open_home` | `site`：在现有 Chromium 打开首页、前置并保留新标签页，可供用户登录或浏览 |
+| `xhs_open_home` | `site`：在现有浏览器打开首页、前置并保留新标签页，可供用户登录或浏览 |
 | `xhs_home_feed` | `site`、`limit`（1–50，默认 10）：有限滚动首页瀑布流，返回卡片及原始链接 |
 | `xhs_list_saved` | `site`、`limit`（1–3000，默认 50），读取当前账号收藏页的可见笔记、封面和原帖链接 |
 | `xhs_read_note` | `url` 接受完整链接、短链接或整段分享文案，读取全文、作者、图片、视频及可用中文字幕 |
@@ -107,7 +107,7 @@ npm test
 
 ```
 
-`PAGE_UNAVAILABLE`：链接加载失败或失效；`NOTE_UNAVAILABLE`：未取得指定笔记全文；`AUTH_REQUIRED`：请在 Chromium 登录；`RATE_LIMITED`：请在 Chromium 完成站点验证后重试；`SEARCH_EXPIRED`：重新搜索。站点 DOM 变化可能需要更新 `src/browser.js` 中的搜索选择器及 `src/extract.js` 中的提取适配。
+`PAGE_UNAVAILABLE`：链接加载失败或失效；`NOTE_UNAVAILABLE`：未取得指定笔记全文；`AUTH_REQUIRED`：请在浏览器登录；`RATE_LIMITED`：请在浏览器完成站点验证后重试；`SEARCH_EXPIRED`：重新搜索。站点 DOM 变化可能需要更新 `src/browser.js` 中的搜索选择器及 `src/extract.js` 中的提取适配。
 
 自动化测试覆盖站点选择、URL 边界、MCP 内存传输及浏览器 DOM 提取。DOM 回归测试默认使用 macOS 上的 Thorium，可通过 `CHROMIUM_PATH` 指定其他 Chromium 系浏览器路径；找不到浏览器时该项会跳过。
 
