@@ -1,0 +1,12 @@
+node_modules/
+.env
+.env.*
+!.env.example
+artifacts/
+*.log
+# Local credentials, browser profiles, and captured output must not be published.
+*.local.json
+*.local.toml
+browser-profile/
+playwright/.auth/
+storage-state*.json

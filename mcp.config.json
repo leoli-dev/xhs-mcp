@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "xiaohongshu": {
+      "command": "node",
+      "args": ["/absolute/path/to/xhs-mcp/src/cli.js", "serve"],
+      "env": {"XHS_MCP_SITE": "rednote"}
+    }
+  }
+}
